@@ -25,7 +25,7 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/your-username/currency-converter.git
+git clone https://github.com/DeMoOx77/currency-converter.git
 cd currency-converter
 Install dependencies:
 
