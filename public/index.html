@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>swiftexchange - RateMate</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">swiftexchange</h1>
+
+    <div class="converter-box">
+      <label for="fromCurrency">From:</label>
+      <select id="fromCurrency" class="currency-select">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+      </select>
+
+      <label for="toCurrency">To:</label>
+      <select id="toCurrency" class="currency-select">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+      </select>
+
+      <input type="number" id="amount" placeholder="Enter Amount" class="amount-input">
+
+      <button class="convert-btn" onclick="swiftexchange()">Convert</button>
+
+      <div id="result" class="result-box"></div>
+    </div>
+  </div>
+
+  <script>
+    async function swiftexchange() {
+      const fromCurrency = document.getElementById("fromCurrency").value;
+      const toCurrency = document.getElementById("toCurrency").value;
+      const amount = document.getElementById("amount").value;
+
+      if (amount === '') {
+        document.getElementById("result").textContent = "Please enter an amount.";
+        return;
+      }
+
+      const apiKey = '1c23ea367c47bac3fd3c5ad7';
+      const url = `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const rate = data.rates[toCurrency];
+        const result = (amount * rate).toFixed(2);
+
+        document.getElementById("result").innerHTML = `<p>${amount} ${fromCurrency} = <strong>${result} ${toCurrency}</strong></p>`;
+      } catch (error) {
+        document.getElementById("result").textContent = "Error fetching conversion rate.";
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
